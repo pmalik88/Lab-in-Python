@@ -2324,6 +2324,1822 @@ class Test:
 Test.m1(10)
 
 
+#############################################
+# How to access member of one class into another
+##################################################
+class Employee:
+    def __init__(self,Name,Salary,EmployeeNo):
+        self.Name=Name
+        self.Salary=Salary
+        self.EmployeeNo=EmployeeNo
+        
+        
+    def display(self):
+        print('Employee Name:',self.Name)
+        print('Employee Salary:',self.Salary)
+        print('Employee Number:',self.EmployeeNo)
+
+class Test:
+    # Static method 
+    def modify(emp):# its passing emp as an object of Employee class.
+        emp.Salary=emp.Salary+10000
+        emp.display()
+# Its not a inheritance concept        
+e=Employee("Durga",70000,98765)
+Test.modify(e) # Its called by class name therefore it is static method
+
+# Employee Name: Durga
+# Employee Salary: 80000
+# Employee Number: 98765
+
+
+
+# Inner Classes
+# 1. The class which is declared inside another class is called inner class.
+# 2. Without existing one type of object, if there is no chance of existing another
+# type of object , we should go for inner classes.
+
+# eg: 
+
+# Wihout existing Car object, no chane of existing Engine object
+# class Car: # Outer class    
+#     class Engine: # Inner class
+
+# Wihout existing University object, no chane of existing Department object       
+# class University:  # Outer class   
+#     class Department: # Inner class
+
+# # Wihout existing Human object, no chane of existing Head object 
+# class Human: # Outer class
+#     class Head:# Inner class
+
+class Outer:
+    
+    def __init__(self):
+        print('Outer class Object creation......')
+        
+        
+    class Inner:
+        def __init__(self):
+            print("Inner class object creation")
+            
+        def m1(self):
+            print('Inner class Method')
+
+
+o =Outer()
+# Outer class Object creation......
+i =o.Inner()
+# Inner class object creation
+i.m1()
+# Inner class Method
+
+# or in a single line
+Outer().Inner().m1()
+# Outer class Object creation......
+# Inner class object creation
+# Inner class Method
+
+
+
+class Outer:
+    
+    def __init__(self):
+        print('Outer class Object creation......')
+        
+    def m2(self):
+        print('Outer class Method')
+        
+        
+    class Inner:
+        def __init__(self):
+            print("Inner class object creation")
+            
+        def m1(self):
+            print('Inner class Method')
+
+
+
+o =Outer()
+# Outer class Object creation......
+i =o.Inner()
+# Inner class object creation
+i.m1()
+# Inner class Method
+i.m2() # it will give error
+# AttributeError: 'Inner' object has no attribute 'm2'
+
+
+# Person -- 
+#     name
+#     date of birth--- DOB()
+#           db
+#           mm
+#           yyyy
+
+
+class Person:
+    
+    def __init__(self):
+        self.name='Durga'
+        self.dob= self.DOB()
+        
+    def display(self):
+        print("Name:",self.name)
+        self.dob.display()
+        
+    class DOB:
+        def __init__(self):
+            self.dd=15
+            self.mm=8
+            self.yyyy=1947
+            
+        def display(self):
+            print('DOB ={}/{}/{}'.format(self.dd,self.mm,self.yyyy))
+        
+
+p=Person()
+p.display()
+#Output
+# Name: Durga
+# DOB =15/8/1947
+
+# =============================================================================
+# Example
+# =============================================================================
+
+
+
+class Person:
+    def __init__(self,name,dd,mm,yyyy):        
+            self.name =name           
+            self.dob = self.DOB(dd,mm,yyyy)
+            
+    def display(self):
+         print("Name:",self.name)
+         self.dob.display()
+    
+    class DOB:
+         def __init__(self,dd,mm,yyyy):
+             self.dd=dd
+             self.mm=mm
+             self.yyyy=yyyy
+             
+         def display(self):
+             print('DOB ={}/{}/{}'.format(self.dd,self.mm,self.yyyy))
+     
+
+p =Person("Rohan",30,12,1988)
+p.display()
+
+
+# Name: Durga
+# DOB =15/8/1947
+
+p.dob.display()
+
+# DOB =30/12/1988
+
+
+# =============================================================================
+# ## -----Three Level----------
+# =============================================================================
+
+class Human:
+    
+    def __init__(self):
+        self.name="parveen"
+        self.head=self.Head()
+        #self.brain=self.Brain()
+        
+        
+    def display(self):
+        print('Name',self.name)
+        
+        self.head.talk()
+        self.head.brain.think()
+    ##  Inner class
+    class Head: 
+        def __init__(self):
+            self.brain=self.Brain()
+        
+        def talk(self): 
+            print("Talking")  
+        
+        #Inner to inner class
+        
+        class Brain:            
+            
+            def think(self):
+                print("Thinking")
+
+
+h=Human()
+h.display()
+
+# Name parveen
+# Talking
+# Thinking
+
+
+# =============================================================================
+# Nested Method Concept 
+# 1. Only in Python ---Not in Java
+# =============================================================================
+
+
+# def m1(): 
+#     def m2():
+        
+# #         xxxxx
+# #         xxxxx/1000000 lines of code
+# #         xxxxx
+
+#     m2()
+#     m2()
+#     m2()
+
+
+class Test:
+    
+    def m1(self):
+        
+        def sum(a,b):
+            print('*'*20)
+            print('First Argument:',a)
+            print('Second Argument:',b)
+            print('The sum:',a+b)
+            print('The product:', a*b)
+            
+        sum(10,20)
+        sum(100,200)
+        sum(1000,2000)
+
+
+t =Test()
+t.m1()
+# ********************
+# First Argument: 10
+# Second Argument: 20
+# The sum: 30
+# The product: 200
+# ********************
+# First Argument: 100
+# Second Argument: 200
+# The sum: 300
+# The product: 20000
+# ********************
+# First Argument: 1000
+# Second Argument: 2000
+# The sum: 3000
+# The product: 2000000
+
+
+
+# =============================================================================
+# Garbage Collection (GC)
+# =============================================================================
+
+# To destroy useless objects
+# use of del ObjectName
+# Based on our requirement , we can enable or disable GC
+# Destructor is
+        # def __del__() =====> Destructor
+        
+#         close db cinnection
+#         close network connection#         
+# Just before destroying an object, GC always calls destructor to perform cleanup
+#          
+# =========. Java has finalize method............
+
+# =============================================================================
+# gc module
+# =============================================================================
+
+    # 1. gc.isenabled()
+    # 2. gc.isdisabled()
+    # 3. gc.enable()
+
+# GC is invoked by Python Virtual Machine
+import gc
+print(gc.isenabled())
+# true
+gc.disable()
+print(gc.isenabled())
+# False
+gc.enable()
+print(gc.isenabled())
+# True
+
+
+class Test:
+    
+    def __init__(self):
+        print('Object Inialization')
+        
+    def __del__(self):
+        print('FUlfilling clean up ')
+
+
+t1 =Test()
+# Object Inialization
+t1=None # Automatically enabled for doing garbage collection but still t1 is in memory only its reference is destroyed
+# FUlfilling clean up 
+print(t1)
+# None ----- Varaible is still present
+del t1
+print(t1)
+# NameError: name 't1' is not defined
+import time
+time.sleep(10)
+print('End of application')
+
+##################################
+list =[Test(),Test(),Test()]
+time.sleep(10)
+list=None
+time.sleep(10)
+print('End of application')
+# Object Inialization
+# Object Inialization
+# Object Inialization
+# FUlfilling clean up 
+# FUlfilling clean up 
+# FUlfilling clean up 
+################################
+## To check how many reference variable to current object
+t1=Test()
+t2=t1
+t3=t2
+t4=t3
+print(sys.getrefcount(t1))
+
+# Object Inialization
+# 5
+
+
+# =============================================================================
+# Module 3
+
+# =============================================================================
+
+# Polymorphism
+# Duck type philosophy of python
+# Overloading
+#     operator overloading
+#     Method overloading (Not supported in Python & Considers the last method)
+#     Constructor overloading (Not supported in Python)
+    
+# Overriding 
+#     Method 
+#     Constructor
+
+###-------- Person----------------
+# Home
+        # class,book,temple,college,milk , butter
+        
+# Outside of Home
+        # brand,cigar,cinema,park,beer
+        
+# Outside of his native place
+        # different colour
+        
+# Overloading
+# --------Operator Overloading
+        # 10 +20 =======>30 -------- Addition
+        # 'durga' + 'soft'=====> durgasoft --Concatenation
+
+        # 10*3=========>30
+        # 'durga'*3====>durgadurgadurga
+
+class Book:
+    def __init__(self,pages):
+        self.pages=pages
+        
+
+b1=Book(100)
+b2=Book(200)
+
+print(b1+b2)
+# TypeError: unsupported operand type(s) for +: 'Book' and 'Book'
+# + support only for string or int object
+
+# operator overloading by using magic methods
+# =============================================================================
+# __add__(self,other)======> b1=self & b2=other
+# __sub__(self,other) +
+# __mul__(self,other) *
+#__div__(self,other) %
+#__mod__(slef,other) | |
+#__floordiv__(self,other) //
+#__pow__(self,other)  **
+
+# __iadd__() --> +=
+# __isub__() --> -=
+# __imul__() --> *=
+# __idiv__() --> /=
+# __imod__() --> %=
+# __ifloordiv__() ---> //=
+# __ipow__()  ----> **=
+
+# Relational
+# >  ---->  __gt__()  Greater than
+# >=  ---->  __ge__()  Greater than equal to
+# <  ---->  __lt__()  less than
+# <=  ---->  __le__()  less than equal to
+# != ------> __ne__()  Not equal
+# == ------> __eq__() Equal to
+
+
+# =============================================================================
+
+class Book:
+    def __init__(self,pages):
+        self.pages=pages
+        
+    def __add__(self,other):        
+        return self.pages+other.pages
+    def __sub__(self,other):
+        return self.pages-other.pages
+    def __mul__(self,other):
+        return self.pages*other.pages
+        
+
+b1=Book(100)
+b2=Book(200)
+b3=Book(700)
+print(b1+b2) #300
+print(b1+b3) #800
+print(b1-b2) #-100
+print(b1*b2) #20000
+
+
+
+
+# eg. Method overloading --- but not supported in python
+# deposit(cash)
+# deposit(cheque)
+# deposit(dd)
+
+
+class Book:
+    def __init__(self,pages):
+        self.pages=pages
+        
+    def __add__(self,other):        
+        return self.pages+other.pages
+    
+    def __str__(self):
+        return 'No. of pages: '+ str(self.pages)# If we try print any instances it will print
+        
+
+b1=Book(100)
+b2=Book(200)
+b3=Book(400)
+
+print(b1)
+# No. of pages: 100 
+
+# =============================================================================
+# To print(b1+b2+b3)
+# =============================================================================
+
+class Book:
+    def __init__(self,pages):
+        self.pages=pages
+        
+    def __add__(self,other):
+        total=self.pages+other.pages
+        b=Book(total)        
+        return b
+    
+    
+
+b1=Book(100)
+b2=Book(200)
+b3=Book(400)
+print(b1+b2+b3)
+# <__main__.Book object at 0x0000026D7BE79270>
+
+## Add str method to print the number of pages
+class Book:
+    def __init__(self,pages):
+        self.pages=pages
+        
+    def __add__(self,other):
+        total=self.pages+other.pages
+        b=Book(total)        
+        return b
+    
+    def __mul__(self,other):
+        total=self.pages*other.pages
+        b=Book(total)        
+        return b
+    
+    def __str__(self):
+        return 'No. of pages: '+ str(self.pages)
+    
+    
+
+b1=Book(100)
+b2=Book(200)
+b3=Book(400)
+print(b1+b2+b3)
+# No. of pages: 700
+
+b4=Book(450)
+print(b1+b2+b3+b4)
+
+# No. of pages: 1150
+print(b1*b2+b3*b4)
+# No. of pages: 200000
+
+# Note
+# 1. Whenever we are calling + operator then __add_() method will be called
+# + operator return type will become __add_() method return type
+# 2. Whenever we are printing any object reference/object, then use __str__ method
+# will be called. If we are not providing, otherwise default implementation will be executed
+
+
+class Student:
+    
+    def __init__(self,name,marks):
+        self.name=name
+        self.marks=marks
+        
+        
+s1=Student('Mohan',120)
+s2=Student('John',130)
+
+print(s1<s2)
+# TypeError: '<' not supported between instances of 'Student' and 'Student'
+
+
+class Student:
+    
+    def __init__(self,name,marks):
+        self.name=name
+        self.marks=marks
+        
+    def __lt__(self,other):
+        return self.marks<other.marks
+        
+        
+s1=Student('Mohan',120)
+s2=Student('John',130)
+
+print(s1<s2)
+# True
+
+# ======================================
+# 
+# =======================================
+class Employee:
+    def __init__(self,name,salary):
+        
+        self.name=name
+        self.salary=salary
+        
+class TimeSheet:
+    def __init__(self,name,days):        
+        self.name=name
+        self.days=days
+
+
+e =Employee('John',10000)
+t =TimeSheet('John', 25)
+
+print('The salary is:', e*t)
+# TypeError: unsupported operand type(s) for *: 'Employee' and 'TimeSheet'
+
+# Modify it
+class Employee:
+    def __init__(self,name,salary):
+        
+        self.name=name
+        self.salary=salary
+        
+    def __mul__(self,other):
+        return self.salary*other.days
+        
+class TimeSheet:
+    def __init__(self,name,days):        
+        self.name=name
+        self.days=days
+        
+    def __mul__(self,other):
+        return self.days*other.salary
+        
+
+
+e =Employee('John',10000)
+t =TimeSheet('John', 25)
+
+print('The salary is:', e*t)
+# The salary is: 250000
+
+print('The salary is:', t*e)
+# The salary is: 250000
+
+
+
+# =============================================================================
+# Method Overloading 
+# Python does not provide support for method/constructor overloading
+# =============================================================================
+# abs(int)
+# abs(long)
+# abs(float)
+
+
+# -- No concept as we dont have any declaration of type (int,float) of objects
+
+class Test:
+    def m1(self):
+        print('No-arg method')
+        
+    def m1(self,x):
+        print("One arg method")
+        
+    def m1(self,x,y):
+        print("Two arg method")
+
+t=Test()
+t.m1()
+# TypeError: Test.m1() missing 2 required positional arguments: 'x' and 'y'
+t.m1(1,21) # Last method is executed
+# Two arg method
+
+# =============================================================================
+# 
+#Default Arguments
+#Variable length Arguments
+# =============================================================================
+#------------------Default Arguments----------------
+class Test:    
+    def sum(self,a=None,b=None,c=None):
+        if a!= None and b!=None and c!=None:
+            print("The sum of three numbers :",a+b+c)            
+        elif a!=None and b!=None:
+            print("The sum of two numbers :",a+b)            
+        else:
+            print(("please provide 2 or 3 arguments"))
+            
+    
+
+t =Test()
+t.sum(10,20)
+# The sum of two numbers : 30
+t.sum(10,20,30)
+#The sum of three numbers : 60
+t.sum(10)
+# please provide 2 or 3 arguments
+
+t.sum(10,0)
+# The sum of two numbers : 10
+
+
+#----------------Variable length Arguments------------
+
+class Test:
+    def sum(self,*a):        
+        total=0
+        for x in a:
+            total=total+x
+        print('The sum is',total)
+
+t =Test()
+t.sum(10,20)
+t.sum(10,20,30)
+t.sum(10,20,30,40,50)
+# The sum is 30
+# The sum is 60
+# The sum is 150
+
+t.sum(10,20,'Durga')
+# TypeError: unsupported operand type(s) for +: 'int' and 'str'
+
+
+class Test:
+    def m1(self,*a):        
+        total=''
+        for x in a:
+            total=total+x
+        print('The concatenation is',total)
+
+
+t=Test()
+t.m1("Durga"," ","software'")
+
+# The concatenation is Durga software'
+
+
+
+# =============================================================================
+# # Constructor Overloading
+# Last constructor will be executed
+# =============================================================================
+
+
+class Test:
+    
+    def __init__(self):
+        print('zero argument constructor')
+
+
+    def __init__(self,x):
+        print('One argument constructor')
+    
+    
+    def __init__(self,x,y):
+        print('Two argument constructor')
+    
+    
+    
+t =Test()
+# TypeError: Test.__init__() missing 2 required positional arguments: 'x' and 'y'
+t=Test(1,2)
+# Two argument constructor
+
+
+#----------- Default value Arguments-------------
+class Test:    
+    def __init__(self,a=None,b=None,c=None):        
+        print('Constructor with 0|1|2|3|4')    
+
+t =Test()
+t =Test(10)
+t =Test(10,20)
+t =Test(10,20,30)
+# Constructor with 0|1|2|3|4
+# Constructor with 0|1|2|3|4
+# Constructor with 0|1|2|3|4
+# Constructor with 0|1|2|3|4
+
+#---------Variable length arguments--------------
+class Test:    
+    def __init__(self,*a):        
+        print('Constructor with any number of arguments')  
+t =Test()
+t =Test(10)
+t =Test(10,20)
+t =Test(10,20,30)
+# Constructor with any number of arguments
+# Constructor with any number of arguments
+# Constructor with any number of arguments
+# Constructor with any number of arguments
+
+
+
+# =============================================================================
+# Method Overriding 
+# =============================================================================
+# =============================================================================
+# Inheritance
+# =============================================================================
+# class P:
+#     10 methods
+    
+# class C(P):
+#     5 More method
+# class(P1,P2,P3):
+
+# 1. Code Reusability
+# 2. Existing functionality, we can extend
+
+
+class P:
+    def property(self):        
+        print('cash+land+gold+power')       
+        
+    def marry(self):
+        print('Subalaxmi')       
+    
+class C(P):
+    pass
+
+c =C()
+c.marry()
+c.property()
+# Subalaxmi
+# cash+land+gold+power
+
+# =============================================================================
+# # Method Overriding
+# It occurs in inheritance and child class method gets preferance
+# =============================================================================
+class P:
+    def property(self):        
+        print('cash+land+gold+power')       
+        
+    def marry(self):
+        print('Subalaxmi')       
+    
+class C(P):
+    def marry(self):
+        print('Katrina...')
+
+
+c =C()
+c.property()
+c.marry()
+# cash+land+gold+power
+# Katrina...
+
+## Using Both functions
+class P:
+    def property(self):        
+        print('cash+land+gold+power')       
+        
+    def marry(self):
+        print('Subalaxmi')       
+    
+class C(P):
+    def marry(self):
+        super().marry()# Access the super class
+        print('Katrina...')
+
+
+c =C()
+c.property()
+c.marry()
+# cash+land+gold+power
+# Subalaxmi
+# Katrina...
+
+
+# =============================================================================
+# Is A vs Has-A Relationship
+# =============================================================================
+
+# =============================================================================
+# Composition Vs Aggregation
+# =============================================================================
+# Husband vs Wife or Boyfriend vs Girlfriend:
+# Without you i cannot be
+
+# Without you i cannot be====> Strong Association--- Composition
+# Without you I can be (Time pass ) ======> Weak Association --- Aggregation
+
+# University Vs Department============>
+# Without University , there is no chance of existing Department
+# ========Strong Association (Composition)
+# University /Container Object
+# Department/Contained object
+# University Has-A Department but strong Association
+
+# Department vs Professor =======> 
+# Department /Container Object
+# Professor/Contained object
+# University Has-A Professor but weak association
+# ==> Container just hold weak association with contained objects
+
+class Student:
+    collegeName='SBM'
+    # IT has weak reference to object of student class
+    def __init__(self,name):
+        self.name=name
+# Object and instance variable has strong association--- Composition
+
+print(Student.collegeName) # Without creating student object we can access
+# this is called weak assciation
+print(s.name) #NameError: name 's' is not defined
+# As we need to create an object ,then only we can access
+# # this is called strong association or composition class
+
+# =============================================================================
+# Types of Inheritance
+# 1.Single Inheritance
+# 2.Multilevel
+# 3.Hierarchical Inheritance
+# 4.Multiple Inheritancr
+# 5.Hybrid Inheritance
+# 6.Cyclic Inheritance
+# =============================================================================
+# =============================================================================
+# ##------------- Single Inheritance-------------
+# 
+# # Single Parent
+# # Single child
+# =============================================================================
+
+class P:
+    def m1(self):
+        print('Parent Method')        
+        
+class C(P):
+    def m2(self):
+        print('Child Method')
+        
+        
+c = C()
+c.m1()
+# Parent Method
+
+# =============================================================================
+# # ------- Multilevel Inheritance-------------
+# =============================================================================
+
+class P:
+    def m1(self):
+        print('Parent Method')        
+        
+class C(P):
+    def m2(self):
+        print('Child Method')
+        
+class GC(C):
+    def m3(self):
+        print('Grand Child Method')
+
+
+        
+gc = GC()
+gc.m1()
+
+
+# =============================================================================
+# # -------Hierarchical Inheritance-------------
+# 
+# # One parent but multiple childs
+# =============================================================================
+
+
+class P:
+    def m1(self):
+        print('Parent Method')        
+        
+class C1(P):
+    def m2(self):
+        print('Child 1 Method')
+        
+class C2(P):
+    def m3(self):
+        print('Child 2 Method')
+
+
+c1 =C1()
+c1.m1()
+# Parent Method
+c2 =C2()
+c2.m1()
+# Parent Method
+
+
+# =============================================================================
+# #---------------- Multiple Inheritance------------------------
+# # Multiple parents but single child
+# 
+# # Ambiguity or Diamond access proble
+# # Output depends upon the order of parents
+# =============================================================================
+
+class P1:
+    def m1(self):
+        print('Parent 1 Method')        
+        
+class P2:
+    def m1(self):
+        print('Parent 2 Method')
+        
+# class C(P):
+#     def m3(self):
+#         print('Child  Method')
+
+class C(P1,P2):
+    pass
+
+
+c =C()
+c.m1()
+# Parent 1 Method
+
+# Change order of parents
+class P1:
+    def m1(self):
+        print('Parent 1 Method')        
+        
+class P2:
+    def m1(self):
+        print('Parent 2 Method')
+        
+# class C(P):
+#     def m3(self):
+#         print('Child  Method')
+
+class C(P2,P1):
+    pass
+
+c =C()
+c.m1()
+# Parent 2 Method
+
+
+# =============================================================================
+# #---------------- Hybrid Inheritance------------------------
+# # Single + Multiple + Multilevel + Hierarchical
+# # Method Resolution Order
+#  
+# =============================================================================
+class P:
+    def m1(self):
+        print('Parent Method')
+        
+class C(P):
+    pass
+
+print(C.mro())
+
+# [<class '__main__.C'>, <class '__main__.P'>, <class 'object'>]
+# Order is  C ---> P -------> object class
+
+
+class P:
+    def m1(self):
+        print('Parent Method')
+        
+class C(P):
+    pass
+
+p =P()
+p.m1()
+
+print(P.mro())
+
+# [<class '__main__.P'>, <class 'object'>]
+# General approach -- Left to Right
+
+class A:
+    def m1(self):
+        print('A Class Method')
+class B(A):
+    def m1(self):
+        print('B Class Method')
+class C(A):
+    def m1(self):
+        print('C Class Method')
+class D(B,C):
+    def m1(self):
+        print('D Class Method')
+    
+
+print(A.mro())
+# [<class '__main__.A'>, <class 'object'>]
+
+print(B.mro())
+# [<class '__main__.B'>, <class '__main__.A'>, <class 'object'>]
+print(C.mro())
+# [<class '__main__.C'>, <class '__main__.A'>, <class 'object'>] 
+print(D.mro())
+# [<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>]
+
+d=D()
+d.m1()
+# D Class Method
+#-----------------------------------
+class A:
+    def m1(self):
+        print('A Class Method')
+class B(A):
+    pass
+class C(A):
+    def m1(self):
+        print('C Class Method')
+class D(B,C):
+    def m1(self):
+        print('D Class Method')
+    
+b=B()
+b.m1()
+# A Class Method
+
+
+# --------------------------------------------
+                  #    o
+                  #   -  -
+                  # -   -  -
+                  # A   B   C
+                  # -   -   -
+                  #   -   -  -
+                  #   X   Y  -
+                  #   -   -  -
+                  #     -    -
+                  #     P- - -
+
+
+
+class A : pass
+class B:pass
+class C:pass
+class X(A,B):pass
+class Y(B,C):pass
+class P(X,Y,C):pass
+
+print(P.mro())
+# [<class '__main__.P'>, <class '__main__.X'>, <class '__main__.A'>, <class '__main__.Y'>, <class '__main__.B'>, <class '__main__.C'>, <class 'object'>]
+
+# Note: For multilevel, there i no guarantee of order 
+# C3 Algorithm
+# Note:  if Head element of first element not present in the tail part of
+# any other list,then consider that element in the result and
+# remove that element from all the lists.
+# List: ABCDEF
+# Head Element : A
+# Tail Part : BCDEF
+
+# mro(P) = P + Merge(mro(X),mro(Y),mro(C),XYC)
+# XYC is Parents List
+# mro(P) = P + Merge(XABO,YBCO,CO,XYC)
+# mro(P) = P + Merge(XABO,YBCO,CO,XYC)
+#mro(P) = P + X + Merge(ABO,YBCO,CO,YC)
+#mro(P) = P + X + A + Merge(BO,YBCO,CO,YC)
+# Now is B is present tail part (BCO) of YBCO, there go to next level
+#mro(P) = P + X + A + Y+ Merge(BO,BCO,CO,C)
+#mro(P) = P + X + A + Y + B + Merge(O,CO,CO,C)
+#mro(P) = P + X + A + Y + B + C+ Merge(O,O,O)
+# mro(P) = P + X + A + Y + B + C+ O
+
+#-----------------------------------------------------------
+class D : pass
+class E:pass
+class F:pass
+class B(D,E):pass
+class C(D,F):pass
+class A(B,C):pass
+
+print(A.mro())
+
+# [<class '__main__.A'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.D'>, <class '__main__.E'>, <class '__main__.F'>, <class 'object'>]
+
+#---------------- Cyclic Inheritance------------------------
+# If a class extends same class
+
+# class A(A):
+    
+# class A(B)
+
+# class B(A)
+
+
+########################
+# =============================================================================
+# Has -A Relationship --Strong ---- Composition
+# Is- A relationship --Weak -----Aggregation
+# =============================================================================
+
+# =============================================================================
+# Super()
+# From child class to call parent class memebers
+# Code Reusabilty
+# =============================================================================
+
+class Person:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+        # 100 Properties like color,weight
+        
+class Student(Person):
+    def __init__(self,name,age,rollno,marks):
+        self.name=name
+        self.age=age
+        # 100 Properties like color,weight
+        self.rollno=rollno
+        self.marks=marks
+        
+class Teacher(Person):
+    def __init__(self,name,age,salary,subject):        
+        self.name=name
+        self.age=age
+        # 100 Properties like color,weight
+        self.salary=salary
+        self.subject=subject
+    
+    
+s = Student("John",21,102,80)
+print(s.__dict__)
+# {'name': 'John', 'age': 21, 'rollno': 102, 'marks': 80}
+
+t =Teacher('Ramesh',45,10000,'Python')
+print(t.__dict__)
+# {'name': 'Ramesh', 'age': 45, 'salary': 10000, 'subject': 'Python'}
+
+
+# We have to write 100 lines of codes for mentionaing the attrivutes
+# use Super class--- super().__init__
+
+
+class Person:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+        # 100 Properties like color,weight
+        
+class Student(Person):
+    def __init__(self,name,age,rollno,marks):
+        super().__init__(name,age)
+        self.rollno=rollno
+        self.marks=marks
+        
+class Teacher(Person):
+    def __init__(self,name,age,salary,subject):        
+        super().__init__(name,age)        
+        self.salary=salary
+        self.subject=subject
+    
+s = Student("John",21,102,80)
+t =Teacher('Ramesh',45,10000,'Python')
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+class Person:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+        # 100 Properties like color,weight
+    def display(self):    
+         print('Name:', self.name)
+         print('Age:', self.age)
+        
+class Student(Person):
+    def __init__(self,name,age,rollno,marks):
+        super().__init__(name,age)
+        self.rollno=rollno
+        self.marks=marks
+        
+    def display(self):
+        print('Name:', self.name)
+        print('Age:', self.age)
+        print('Roll No.:', self.rollno)
+        print('Marks:', self.marks)       
+        
+        
+class Teacher(Person):
+    def __init__(self,name,age,salary,subject):        
+        super().__init__(name,age)        
+        self.salary=salary
+        self.subject=subject
+    def display(self):    
+        print('Name:', self.name)
+        print('Age:', self.age)
+        print('salary:', self.salary)
+        print('subject:', self.subject) 
+    
+s = Student("John",21,102,80)
+s.display()
+# Name: John
+# Age: 21
+# Roll No.: 102
+# Marks: 80
+t =Teacher('Ramesh',45,10000,'Python')
+t.display()
+# Name: Ramesh
+# Age: 45
+# salary: 10000
+# subject: Python
+
+# Here Code reusabilty is not there w.r.t to Method
+
+#%%%%%%%%%%%%%%%%%%%% Modify
+
+class Person:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+        # 100 Properties like color,weight
+    def display(self):    
+         print('Name:', self.name)
+         print('Age:', self.age)
+        
+class Student(Person):
+    def __init__(self,name,age,rollno,marks):
+        super().__init__(name,age)
+        self.rollno=rollno
+        self.marks=marks
+        
+    def display(self):
+        super().display()
+        print('Roll No.:', self.rollno)
+        print('Marks:', self.marks)       
+        
+        
+class Teacher(Person):
+    def __init__(self,name,age,salary,subject):        
+        super().__init__(name,age)        
+        self.salary=salary
+        self.subject=subject
+    def display(self):    
+        super().display()
+        print('salary:', self.salary)
+        print('subject:', self.subject) 
+    
+s = Student("John",21,102,80)
+s.display()
+t =Teacher('Ramesh',45,10000,'Python')
+t.display()
+# Name: John
+# Age: 21
+# Roll No.: 102
+# Marks: 80
+# Name: Ramesh
+# Age: 45
+# salary: 10000
+# subject: Python
+
+#%%%%%%%%%%%%%%%%% LOOP HOLE in super
+
+# A-- B--C--D --E
+# which super method is going to execute
+
+class A:
+    def m1(self):
+        print('A Method')        
+        
+class B(A):
+    def m1(self):
+        print('B Method')
+        
+class C(B):
+    def m1(self):
+        print('C Method')
+class D(C):
+    def m1(self):
+        print('D Method')
+        
+class E(D):
+    def m1(self):
+        print('E Method')
+
+e =E()
+e.m1()
+# E Method
+
+##########################
+class A:
+    def m1(self):
+        print('A Method')        
+        
+class B(A):
+    def m1(self):
+        print('B Method')
+        
+class C(B):
+    def m1(self):
+        print('C Method')
+class D(C):
+    def m1(self):
+        print('D Method')
+        
+class E(D):
+    def m1(self):
+        super().m1()
+        print('E Method')
+
+e =E()
+e.m1()
+
+# D Method
+# E Method
+
+####################
+
+class A:
+    def m1(self):
+        print('A Method')        
+        
+class B(A):
+    def m1(self):
+        print('B Method')
+        
+class C(B):
+    def m1(self):
+        print('C Method')
+class D(C):
+    def m1(self):
+        super().m1()
+        print('D Method')
+        
+class E(D):
+    def m1(self):
+        super().m1()
+        print('E Method')
+
+e =E()
+e.m1()
+
+# C Method
+# D Method
+# E Method
+
+#########################
+
+class A:
+    def m1(self):
+        print('A Method')        
+        
+class B(A):
+    def m1(self):
+        super().m1()
+        print('B Method')
+        
+class C(B):
+    def m1(self):
+        super().m1()
+        print('C Method')
+class D(C):
+    def m1(self):
+        super().m1()
+        print('D Method')
+        
+class E(D):
+    def m1(self):
+        super().m1()
+        print('E Method')
+
+e =E()
+e.m1()
+
+# A Method
+# B Method
+# C Method
+# D Method
+# E Method
+#######################
+
+#2 Ways to call any class
+
+#  1. parentsclassName.methodname(self)
+
+
+
+
+class A:
+    def m1(self):
+        print('A Method')        
+        
+class B(A):
+    def m1(self):
+       
+        print('B Method')
+        
+class C(B):
+    def m1(self):        
+        print('C Method')
+
+class D(C):
+    def m1(self):        
+        print('D Method')
+        
+class E(D):
+    def m1(self):
+        B.m1(self)
+        print('E Method')
+
+e =E()
+e.m1()
+
+# B Method
+# E Method
+
+
+# 2.2nd  way --- super(D,self).m1()-- here super of D will be called i.e. C
+
+class A:
+    def m1(self):
+        print('A Method')        
+        
+class B(A):
+    def m1(self):
+       
+        print('B Method')
+        
+class C(B):
+    def m1(self):        
+        print('C Method')
+
+class D(C):
+    def m1(self):        
+        print('D Method')
+        
+class E(D):
+    def m1(self):
+        super(B,self).m1()
+        print('E Method')
+
+e =E()
+e.m1()
+# A Method
+# E Method
+
+# 1. From child class by using super(), we can not call parent
+# class instance variable. Use self. only.:
+    
+# 2. From child class by using super(),we can call parent class
+# static variables
+
+#############################
+
+class P:
+    a =10
+    
+    def __init__(self):
+        self.b=20
+        
+class C(P):
+    def m1(self):
+        print(super().a)
+    
+c =C()
+c.m1()
+
+# 10
+############################
+class P:
+    a =10
+    
+    def __init__(self):
+        self.b=20
+        
+class C(P):
+    def m1(self):
+        print(super().b)
+    
+c =C()
+c.m1()
+# AttributeError: 'super' object has no attribute 'b'
+
+######################## use self
+class P:
+    a =10
+    
+    def __init__(self):
+        self.b=20
+        
+class C(P):
+    def m1(self):
+        print(self.b)
+    
+c =C()
+c.m1()
+# 20
+
+
+######################## use self and super
+class P:
+    a =10
+    
+    def __init__(self):
+        self.b=20
+        
+class C(P):
+    def m1(self):
+        print(super().a)
+        print(self.b)
+    
+c =C()
+c.m1()
+# 10
+# 20
+
+
+###### More example
+
+class P:
+    
+    def __init__(self):
+        print('Parent Constructor')
+        
+    def m1(self):
+        print('Parent instance method')
+        
+    @classmethod 
+    def m2(cls):
+        print('Parent class Method')
+        
+    @staticmethod 
+    def m3():
+        print('Parent static method')
+        
+        
+class C(P):
+
+    def __init__(self):
+        super().__init__()
+        super().m1()
+        super().m2()
+        super().m3()
+
+
+c = C()
+
+# Parent Constructor
+# Parent instance method
+# Parent class Method
+# Parent static method
+
+
+###### 
+class P:
+    
+    def __init__(self):
+        print('Parent Constructor')
+        
+    def m1(self):
+        print('Parent instance method')
+        
+    @classmethod 
+    def m2(cls):
+        print('Parent class Method')
+        
+    @staticmethod 
+    def m3():
+        print('Parent static method')
+        
+        
+class C(P):
+
+    def m4(self):
+        super().__init__()
+        super().m1()
+        super().m2()
+        super().m3()
+
+
+c = C()
+c.m4()
+# Parent Constructor
+# Parent Constructor
+# Parent instance method
+# Parent class Method
+# Parent static method
+
+l = []
+n = int(input('Enter the number of values'))
+for i in range(n):
+    x=input('Enter value:')
+    l.append(int(x))
+print(l)
+
+# =============================================================================
+# File Handling I/O
+# Temporary Storage : List ,Tuple,Dictionary as part of heap
+# Permanent Storage: Files, Database concepts, Big Data (Warehouse,cloud)
+# e.g 1 lakh customers --go for database
+# More than bilion (facebook posts --- Big data concepts
+
+# Files:
+#     1. Text File ----> text data like name of students,marks 
+#     2. Binary Files ---> Images,video files,audio files
+##############################
+# 1. Text File ----> text data like name of students,marks 
+# Open File
+#     Write Operation
+#     Read Operation
+# f = open(FileName,mode) # f is a object
+# Only available for text file
+# Mode  -- 
+# 1. Read (r), # File not available, then it will give FileNotFound Error
+# 2. Write(w), # File not available, then it will create a file & perform overwrite operation
+# 3. Append (a) # File not available, then it will create a file & add text
+# 4. Read/write (r+) # To read and then write
+# 5. Write/read (r+) # To write and read. It will overwrite existing data
+# 6. Append/read (a+) # File append and then read. It wont overwrite
+# 7. Exclusive (x) 
+
+# it is for write operation
+f =open('abc.text','w')
+# File may or may not exists
+f =open('abc.text','x')
+# Compulsory ----> file should not be available
+# if abc.txt file is already availabe - File ExistsError
+
+# ++++++++ Default Mode is read mode
+# Exmple
+# To open abc.txt file as write mode
+f =open('abc.text','w')
+#############################################
+# 2. Binary File-- Only 7 modes are availabe
+# rb
+# wb
+# ab
+# r+b
+# w+b
+# a+b
+# xb
+
+# Use Close ---- Judicious use of System Allocated resurces
+# f.close()
+# =============================================================================
+# f is a object and various prpoerties of File Object:
+f.name # variable
+f.mode # variable
+f.closed # variable
+f.readable() # Methods
+f.writable() # Methods
+
+
+f =open('abc.txt','w+')
+print('File name', f.name)
+print('File Mode', f.mode)
+print('Is file readable', f.readable())
+print('Is file Writeable', f.writable())
+print('Is file closed?', f.closed)
+f.close()
+
+# Writing Data to File:
+       
+# f.write(str)
+# f.write(list of lines)
+
+# Write one line
+f=open('abc.txt','w')
+f.write('Let us enjoy learning by Prof. Durga')
+f.close()
+print('Write operation completed')
+## Write two lines
+f=open('abc.txt','w')
+f.write('Let us enjoy learning by Prof. Durga\n')
+f.write('Let us enjoy music by A.R. Rehman\n')
+f.close()
+print('Write operation completed')
+
+##-----Using List
+f=open('abc.txt','w')
+f.writelines(['Let us enjoy learning by Prof. Durga\n','Let us enjoy music by A.R. Rehman'])
+f.close()
+print('Write operation completed')
+## Using Tuple
+f=open('abc.txt','w')
+f.writelines(('Let us enjoy learning by Prof. Durga\n','Let us enjoy music by A.R. Rehman'))
+f.close()
+print('Write operation completed from Tuple')
+
+
+
+############### Important Dynamic reading /Writing
+f=open('E:\Python Manual\abc.txt','w')
+# It will give error as single backslash(\) is treated as escape character.
+# Either use \\ or forward slash
+
+f=open('E:\\Python Manual\\abc.txt','w')
+# or f=open('E:/Python Manual/abc.txt','w')
+f.writelines(('Let us enjoy learning by Prof. Durga\n','Let us enjoy music by A.R. Rehman'))
+f.close()
+print('Write operation completed from Tuple')
+
+
+fname=input('Enter File name:')
+f =open('E:\\Python Manual\\'+fname,'w')
+data =input('Enter your data')
+f.write(data)
+f.close()
+print('Write operation completed')
+
+
+# =============================================================================
+# reading chracter data from the text files
+# =============================================================================
+f.read() --> To read total data from file
+f.read(n) --> To read n characters from the file
+f.readline() --> To read only one line
+f.readlines() --> To read all lines into a list
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

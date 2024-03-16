@@ -250,6 +250,77 @@ while(count<n):
     print("*"*20)
     count+=1
 
+# =============================================================================
+# Example 3_3
+# =============================================================================
+class Employee:
+    def __init__(self,name,salary):
+        
+        self.name=name
+        self.salary=salary
+        
+    def __mul__(self,other):
+        return self.salary*other.days
+        
+class TimeSheet:
+    def __init__(self,name,days):        
+        self.name=name
+        self.days=days
+      
+
+
+e =Employee('John',10000)
+t =TimeSheet('John', 25)
+
+print('The salary is:', e*t)
+# The salary is: 250000
+
+print('The salary is:', t*e)
+# TypeError: unsupported operand type(s) for *: 'TimeSheet' and 'Employee'
+
+# Modify it
+
+class Employee:
+    def __init__(self,name,salary):
+        
+        self.name=name
+        self.salary=salary
+        
+    def __mul__(self,other):
+        return self.salary*other.days
+        
+class TimeSheet:
+    def __init__(self,name,days):        
+        self.name=name
+        self.days=days
+        
+    def __mul__(self,other):
+        return self.days*other.salary
+        
+
+
+e =Employee('John',10000)
+t =TimeSheet('John', 25)
+
+print('The salary is:', e*t)
+# The salary is: 250000
+
+print('The salary is:', t*e)
+# The salary is: 250000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
